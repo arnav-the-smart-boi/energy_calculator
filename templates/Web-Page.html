@@ -1,1 +1,47 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fossil Fuel Calculator</title>
 
+        <style>
+            body {
+                background-color: #4a598a;
+                font-family:Arial, Helvetica, sans-serif;
+            }
+            h1, h2{
+                color: #ffffff;
+            }
+            p{
+                color: #ffffff;
+                font-size: 25px;
+            }
+            form{
+                color: #ffffff;
+                align-items: center;
+            }
+            input{
+                border-width: 3px;
+                background-color: #2b334d;
+                color: #ffffff;
+            }
+            
+
+        </style>
+    </head>
+    <body>
+        <h1 align="center">Energy Calculator</h1> <hr>
+        <p>Ever wondered how much energy and money can be saved if we start using solar energy?</p>
+
+        
+        <form action="/result" method="post">
+            <label>Enter you energy bill (in dollars) </label><input type="number" name="bill" id="bill"><br>
+            <label>Enter the amount of energy you have used (in kW per hour) </label><input type="number" name="energy" id="energy">
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if price_per_unit %}
+            <h2>It costs you ${{ price_per_unit }}! for every kW/H but if you switched to solar panel, it will only be ${{  price_per_solar  }}</h2>
+        {% endif %}
+    </body>
+</html>
