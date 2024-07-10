@@ -1,47 +1,106 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Fossil Fuel Calculator</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Calculator</title>
+    <style>
+        body {
+            background-color: #4a598a;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #ffffff;
+        }
+        h1, h2, h3 {
+            color: #ffffff;
+        }
+        p{
+            color: #ffffff;
+            font-size: 25px;
+        }
+        b {
+            font-size: 32px;
+        }
+        u {
+            color: #ffffff;
+        }
+        form {
+            color: #ffffff;
+            align-items: center;
+        }
+        input {
+            border-width: 3px;
+            background-color: #2b334d;
+            color: #ffffff;
+        }
+        .submit-button {
+            background-color: #2b334d;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: background-color 0.3s ease;
+        }
+        .submit-button:hover {
+            background-color: #181d2b;
+        }
+        .submit-button:active {
+            background-color: #181d2b;
+            box-shadow: 0 5px #11121b;
+            transform: translateY(4px);
+        }
+    </style>
+</head>
+<body>
+    <h1 align="center">Energy Calculator</h1>
+    <hr>
+    <p>Ever wondered how much energy and money can be saved if we start using solar energy?</p>
 
-        <style>
-            body {
-                background-color: #4a598a;
-                font-family:Arial, Helvetica, sans-serif;
-            }
-            h1, h2{
-                color: #ffffff;
-            }
-            p{
-                color: #ffffff;
-                font-size: 25px;
-            }
-            form{
-                color: #ffffff;
-                align-items: center;
-            }
-            input{
-                border-width: 3px;
-                background-color: #2b334d;
-                color: #ffffff;
-            }
-            
+    <form action="/result" method="post">
+        <label>Enter your energy bill (in dollars)</label>
+        <input type="number" name="bill" id="bill" value="{% if bill %}{{ bill }}{% endif %}">
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
 
-        </style>
-    </head>
-    <body>
-        <h1 align="center">Energy Calculator</h1> <hr>
-        <p>Ever wondered how much energy and money can be saved if we start using solar energy?</p>
-
-        
-        <form action="/result" method="post">
-            <label>Enter you energy bill (in dollars) </label><input type="number" name="bill" id="bill"><br>
-            <label>Enter the amount of energy you have used (in kW per hour) </label><input type="number" name="energy" id="energy">
-            <button type="submit">Submit</button>
+    {% if bill and not planning_years %}
+        <hr>
+        <u><h1>Results</h1></u>
+        <u><h2>Cost efficiency</h2></u>
+        <h3>It costs you <b>${{ bill }}!</b> but if you switched to solar panel, your entire bill would only be <b>${{ price_using_solar }}</b><br>It can save you <b style="color: #eaf8ff;">${{ savings }}</b></h3>
+        <hr width="40%" align="left">
+        <u><h2>"Solar panels are too expensive"</h2></u>
+        <h3>I agree, $600 is no small price. But as you are getting some savings by using it, you will be able to earn it back in <b>{{ months }}</b> months or about <b>{{ days }}</b> days</h3>
+        <hr width="40%" align="left">
+        <u><h2>How much saving?</h2></u>
+        <form action="/result_investment" method="post">
+            <label>If you had a solar panel, how many years will you use it for?</label>
+            <input type="number" name="planning_years" id="planning_years">
+            <input type="hidden" name="bill" value="{{ bill }}">
+            <button type="submit" class="submit-button">Submit</button>
         </form>
-
-        {% if price_per_unit %}
-            <h2>It costs you ${{ price_per_unit }}! for every kW/H but if you switched to solar panel, it will only be ${{  price_per_solar  }}</h2>
-        {% endif %}
-    </body>
+    {% elif bill and planning_years %}
+        <hr>
+        <u><h1>Results</h1></u>
+        <u><h2>Cost efficiency</h2></u>
+        <h3>It costs you <b>${{ bill }}!</b> but if you switched to solar panel, your entire bill would only be <b>${{ price_using_solar }}</b><br>It can save you <b style="color: #eaf8ff;">${{ savings }}</b></h3>
+        <hr width="40%" align="left">
+        <u><h2>"Solar panels are too expensive"</h2></u>
+        <h3>I agree, $600 is no small price. But as you are getting some savings by using it, you will be able to earn it back in <b>{{ months }}</b> months or about <b>{{ days }}</b> days</h3>
+        <hr width="40%" align="left">
+        <u><h2>How much saving?</h2></u>
+        <h3>If you do the math you will find that, because of this saving, you are saving:</h3>
+        <ul>
+            <li><b>${{total_saving}}</b> in {{planning_years}} years or {{totalMonths}} months </li>
+            <li><b>${{totalMonths_Earning}}</b> in {{monthsEarning}} months after paying for the solar panel</li>
+            <li>Assuming you need to pay about a $1000 for maintainance <b>${{earning_with_maintainance}}</b> {{monthsEarning}} months after paying for the solar panel</li>
+        </ul>
+    {% else %}
+        <h3>Please enter a bill here.</h3>
+    {% endif %}
+</body>
 </html>
