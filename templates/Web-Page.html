@@ -62,7 +62,7 @@
     <p>Ever wondered how much energy and money can be saved if we start using solar energy?</p>
 
     <form action="/result" method="post">
-        <label>Enter your energy bill (in dollars)</label>
+        <label>Enter your energy bill (in ruppees)</label>
         <input type="number" name="bill" id="bill" value="{% if bill %}{{ bill }}{% endif %}">
         <button type="submit" class="submit-button">Submit</button>
     </form>
@@ -71,10 +71,10 @@
         <hr>
         <u><h1>Results</h1></u>
         <u><h2>Cost efficiency</h2></u>
-        <h3>It costs you <b>${{ bill }}!</b> but if you switched to solar panel, your entire bill would only be <b>${{ price_using_solar }}</b><br>It can save you <b style="color: #eaf8ff;">${{ savings }}</b></h3>
+        <h3>It costs you <b>₹{{ bill }}!</b> but if you switched to solar panel, your entire bill would only be <b>₹{{ price_using_solar }}</b><br>It can save you <b style="color: #eaf8ff;">₹{{ savings }}</b></h3>
         <hr width="40%" align="left">
         <u><h2>"Solar panels are too expensive"</h2></u>
-        <h3>I agree, $600 is no small price. But as you are getting some savings by using it, you will be able to earn it back in <b>{{ months }}</b> months or about <b>{{ days }}</b> days</h3>
+        <h3>I agree, ₹50000 is no small price. But as you are getting some savings by using it, you will be able to earn it back in <b>{{ months }}</b> months or about <b>{{ days }}</b> days</h3>
         <hr width="40%" align="left">
         <u><h2>How much saving?</h2></u>
         <form action="/result_investment" method="post">
@@ -87,17 +87,17 @@
         <hr>
         <u><h1>Results</h1></u>
         <u><h2>Cost efficiency</h2></u>
-        <h3>It costs you <b>${{ bill }}!</b> but if you switched to solar panel, your entire bill would only be <b>${{ price_using_solar }}</b><br>It can save you <b style="color: #eaf8ff;">${{ savings }}</b></h3>
+        <h3>It costs you <b>₹{{ bill }}!</b> but if you switched to solar panel, your entire bill would only be <b>₹{{ price_using_solar }}</b><br>It can save you <b style="color: #eaf8ff;">₹{{ savings }}</b></h3>
         <hr width="40%" align="left">
         <u><h2>"Solar panels are too expensive"</h2></u>
-        <h3>I agree, $600 is no small price. But as you are getting some savings by using it, you will be able to earn it back in <b>{{ months }}</b> months or about <b>{{ days }}</b> days</h3>
+        <h3>I agree, ₹50000 is no small price. But as you are getting some savings by using it, you will be able to earn it back in <b>{{ months }}</b> months or about <b>{{ days }}</b> days</h3>
         <hr width="40%" align="left">
         <u><h2>How much saving?</h2></u>
         <h3>If you do the math you will find that, because of this saving, you are saving:</h3>
         <ul>
-            <li><b>${{total_saving}}</b> in {{planning_years}} years or {{totalMonths}} months </li>
-            <li><b>${{totalMonths_Earning}}</b> in {{monthsEarning}} months after paying for the solar panel</li>
-            <li>Assuming you need to pay about a $1000 for maintainance <b>${{earning_with_maintainance}}</b> {{monthsEarning}} months after paying for the solar panel</li>
+            <li><b>₹{{total_saving}}</b> in {{planning_years}} years or {{totalMonths}} months </li>
+            <li><b>₹{{totalMonths_Earning}}</b> in {{monthsEarning}} months after paying for the solar panel</li>
+            <li>Assuming you need to pay about a ₹1000 for maintainance <b>₹{{earning_with_maintainance}}</b> {{monthsEarning}} months after paying for the solar panel</li>
         </ul>
     {% else %}
         <h3>Please enter a bill here.</h3>
