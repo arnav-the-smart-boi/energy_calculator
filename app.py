@@ -2,9 +2,9 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-tradition_energy_price = 0.15
-solar_energy_price = 0.06
-solar_panel_price = 600
+tradition_energy_price = 12.5
+solar_energy_price = 5
+solar_panel_price = 50000
 
 def calculation(money):
     units_of_energy = round(float(money) / tradition_energy_price, 2)
@@ -42,11 +42,12 @@ def result():
         bill = request.form.get('bill')
         
         if bill:
-            bill = float(bill)
+            bill = round(float(bill), 2)
         else:
             return render_template('Web-Page.html')
 
         price_using_solar, savings = calculation(bill)
+        savings = round(savings, 2)
         months, days = solar_panel(savings)
 
         return render_template('Web-Page.html', bill=bill, price_using_solar=price_using_solar, savings=savings, months=months, days=days)
@@ -61,7 +62,7 @@ def result_investment():
         planning_years = request.form.get('planning_years')
 
         if bill:
-            bill = float(bill)
+            bill = round(float(bill), 2)
         else:
             return render_template('Web-Page.html')
 
@@ -77,8 +78,8 @@ def result_investment():
 
         return render_template('Web-Page.html', bill=bill, price_using_solar=price_using_solar, savings=savings, months=months, days=days, planning_years=planning_years, totalMonths=totalMonths, monthsEarning=monthsEarning, totalMonths_Earning=totalMonths_Earning, earning_without_maintainance=earning_without_maintainance, earning_with_maintainance=earning_with_maintainance, total_saving = total_saving)
         
-    except ValueError:
-        return render_template('Web-Page.html')
+    except ValueError or TypeError:
+        return render_template('Web-Page.html') 
 
 if __name__ == '__main__':
     app.run(debug=True)
